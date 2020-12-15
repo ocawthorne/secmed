@@ -10,12 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_14_211018) do
+ActiveRecord::Schema.define(version: 2020_12_15_192527) do
 
   create_table "appointments", force: :cascade do |t|
     t.datetime "date"
     t.integer "doctor_id"
     t.integer "patient_id"
+    t.text "complaint"
+    t.text "diagnosis"
+    t.boolean "diagnosispending"
+    t.string "prescription"
+    t.datetime "prescriptionexpiry"
     t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
   end
@@ -33,6 +38,9 @@ ActiveRecord::Schema.define(version: 2020_12_14_211018) do
 
   create_table "drugs", force: :cascade do |t|
     t.string "name"
+    t.string "contra_url"
+    t.string "interaction_url"
+    t.text "contraindications"
   end
 
   create_table "patient_conditions", force: :cascade do |t|
@@ -47,6 +55,7 @@ ActiveRecord::Schema.define(version: 2020_12_14_211018) do
     t.string "dosage"
     t.integer "patient_id"
     t.integer "drug_id"
+    t.boolean "active"
     t.index ["drug_id"], name: "index_patient_drugs_on_drug_id"
     t.index ["patient_id"], name: "index_patient_drugs_on_patient_id"
   end

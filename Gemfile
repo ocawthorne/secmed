@@ -3,6 +3,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.1'
 
+#! Use Nokogiri/OpenURI to scrape for drug URLs for interactions
+gem 'nokogiri'
+gem 'open-uri'
+gem 'pry-rails'
+gem 'pry'
+gem 'pry-byebug'
+gem 'pry-rescue'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
 # Use sqlite3 as the database for Active Record
