@@ -1,0 +1,26 @@
+<%= form_for @doctor do |f| %>
+   
+   <div class="form-group">
+      <%= f.label :email %>
+      <br>
+      <%= f.text_field :email, class: "form-control" %>
+   </div>
+
+   <div class="form-group">
+      <%= f.label :password, "Password:" %>
+      <br>
+      <%= f.password_field :password, class: "form-control" %>
+   </div>
+
+   <div class="form-group">
+      <%= f.label :password_confirmation, "Password Confirmation:" %>
+      <br>
+      <%= f.password_field :password_confirmation, class: "form-control" %>
+   </div>
+
+   <div class="actions">
+      <br/>
+      <%= f.submit class: "btn btn-primary" %>
+   </div>
+
+<% end %>

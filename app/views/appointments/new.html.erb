@@ -1,0 +1,23 @@
+<%= form_tag('appointments#new', method: :post) do %>
+
+  <div class="form-group">
+    <%= label_tag(:name, "Name of patient:") %>
+   <input list="patients" name="patients" id="patient">
+   <datalist id="patients">
+      <% @patients.each do |patient| %>
+         <option value="<%= full_name patient %>">
+      <% end %>
+   </datalist>
+  </div>
+  <p>(Patient not showing up on the list? Please create a new patient.)</p>
+
+  <div class="form-group">
+    <%= label_tag(:date, "Date of appointment:") %>
+    <%= date_field_tag(:date, nil, class: "form-control") %>
+  </div>
+   
+  <div class="actions">
+    <%= submit_tag("Submit new appointment") %>
+  </div>
+
+<% end %>

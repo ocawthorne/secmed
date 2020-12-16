@@ -9,15 +9,21 @@
 Doctor.create([
    {
       first_name: "Adam",
-      surname: "Botticelli"
+      surname: "Botticelli",
+      email: "ab@doctor.com",
+      password: "ab"
    },
    {
       first_name: "Charles",
-      surname: "Darwin"
+      surname: "Darwin",
+      email: "cd@doctor.com",
+      password: "cd"
    },
    {
       first_name: "Erwin",
-      surname: "Foxhill"
+      surname: "Foxhill",
+      email: "ef@doctor.com",
+      password: "ef"
    }
 ])
 
@@ -39,17 +45,8 @@ Patient.create([
    }
 ])
 
-Drug.create([
-   {name: "Paracetamol"}, {name: "Warfarin"}, {name: "Aspirin"}, {name: "Phenytoin"}, {name: "Microgynon"}
-   #! Paracetamol interacts with Phenytoin
-   #! Warfarin interacts with Phenytoin
-   #! Warfarin interacts with Aspirin
-   #! Microgynon interacts with Phenytoin
-])
-
 Condition.create([
    {name: "Epilepsy"}, #! Use Phenytoin
    {name: "Haemophilia"}, #! Do NOT use Aspirin
    {name: "Stroke"} #! Use Warfarin
-
 ])

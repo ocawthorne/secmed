@@ -1,11 +1,20 @@
 class SessionsController < ApplicationController
-   def new
+   skip_before_action :verified_doctor, only: [:new, :create]
 
-   end
+   def new; end
 
    def create
-      @doctor = Doctor.find_by(email: params[:email])
-      return head(:forbidden) unless @doctor.authenticate(params[:password])
-      session[:doctor_id] = @doctor.id
-   end
+      doctor = Doctor.find_by(email: params[:email])
+      doctor.try(:authenticate, params[:password])
+      return redirect_to(controller: 'sessions', action: 'new') unless doctor
+      session[:id] = doctor.id
+      @doctor = doctor
+      redirect_to controller: 'appointments', action: 'index'
+    end
+  
+    def destroy
+      session.delete("doctor_id")
+      redirect_to root_path
+    end
+    
 end

@@ -1,6 +1,14 @@
 class DoctorsController < ApplicationController
+   def new
+
+   end
+   
    def create
       Doctor.create(user_params)
+   end
+
+   def show
+      @doctor = Doctor.find(params[:id])
    end
 
    private

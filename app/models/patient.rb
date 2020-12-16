@@ -7,4 +7,8 @@ class Patient < ActiveRecord::Base
 
    has_many :patient_conditions
    has_many :conditions, through: :patient_conditions
+
+   validates :first_name, presence: true
+   validates :surname, presence: true
+   validates :date_of_birth, presence: true
 end

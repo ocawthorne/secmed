@@ -1,15 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>SecMed</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
-
   <body>
-    <%= yield %>
+    <div class="container">
+      <h1>SecMed</h1>
+      <br><br>
+      <%= yield %>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    </div>
   </body>
 </html>
