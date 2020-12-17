@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_15_211533) do
+ActiveRecord::Schema.define(version: 2020_12_17_000222) do
 
   create_table "appointments", force: :cascade do |t|
     t.datetime "date"
@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 2020_12_15_211533) do
     t.integer "patient_id"
     t.text "complaint"
     t.text "diagnosis"
-    t.boolean "diagnosispending"
+    t.boolean "diagnosis_pending"
     t.string "prescription"
-    t.datetime "prescriptionexpiry"
+    t.datetime "prescription_expiry"
     t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
   end
@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 2020_12_15_211533) do
     t.datetime "date_of_birth"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "password_digest"
+    t.string "email"
   end
 
 end

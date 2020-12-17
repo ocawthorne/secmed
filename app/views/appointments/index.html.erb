@@ -1,0 +1,11 @@
+<h3>Hello, <%= full_name(@user) %>.</h3>
+<br>
+<p>Appointment History:</p>
+<ul>
+<% @user.appointments.each do |appointment| %>
+   <li>
+   <%= appointment.date.strftime('%d/%m/%Y') %> | 
+   <%= full_name(appointment.patient) if @user_id_type == "doctor_id"  %>
+   <%= full_name(appointment.doctor) if @user_id_type == "patient_id" %></li>
+<% end %>
+</ul>
