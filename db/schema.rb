@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_17_213304) do
+ActiveRecord::Schema.define(version: 2020_12_18_205406) do
 
   create_table "appointments", force: :cascade do |t|
     t.datetime "date"
@@ -19,8 +19,6 @@ ActiveRecord::Schema.define(version: 2020_12_17_213304) do
     t.text "complaint"
     t.text "diagnosis"
     t.boolean "diagnosis_pending"
-    t.string "prescription"
-    t.datetime "prescription_expiry"
     t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
   end
@@ -54,10 +52,9 @@ ActiveRecord::Schema.define(version: 2020_12_17_213304) do
   end
 
   create_table "patient_drugs", force: :cascade do |t|
-    t.string "dosage"
     t.integer "patient_id"
     t.integer "drug_id"
-    t.boolean "active"
+    t.datetime "prescription_expiry"
     t.index ["drug_id"], name: "index_patient_drugs_on_drug_id"
     t.index ["patient_id"], name: "index_patient_drugs_on_patient_id"
   end

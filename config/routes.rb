@@ -9,15 +9,28 @@ Rails.application.routes.draw do
 
   get '/home' => 'doctors#show'
 
-  resources :appointments, only: [:index, :new, :create, :edit, :update]
-
-  resources :patients, only: [:new, :create, :edit, :update, :show] do
-    resources :appointments, only: :index
+  resources :doctors, only: [] do
+    resources :appointments, only: [:index, :new, :create]
   end
 
-  resources :doctors, only: :show do
-    resources :appointments, only: :index
+  resources :patients, only: [:index, :show, :new, :create, :edit, :update] do
+    resources :appointments, only: [:index, :show, :edit, :update]
   end
+
+  # resources :patients, only: [:new, :create, :edit, :update] do
+  #   resources :appointments, only: [:show, :index]
+  # end
+
+  # resources :appointments, only: [:new, :create] do
+  #   resources :doctors, only: :index
+  #   resources :patients, only: [:index, :edit, :update, :show]
+  # end
+  
+  # resources :patients, only: [:new, :create, :edit, :update, :show]
+
+  # resources :doctors, only: :show do
+  #   resources :appointments, only: :index
+  # end
 
   # resources :sessions
 

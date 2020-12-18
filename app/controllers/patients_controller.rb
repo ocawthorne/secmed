@@ -19,7 +19,7 @@ class PatientsController < ApplicationController
    end
 
    def index
-      
+      @patients = Patient.all.sort_by{ |patient| patient.surname }
    end
 
    def edit

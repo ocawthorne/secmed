@@ -10,7 +10,8 @@ class Patient < ActiveRecord::Base
 
    validates :first_name, presence: true
    validates :surname, presence: true
-   # validates :date_of_birth, presence: true
 
    has_secure_password
 end
+
+# where("prescription_expiry < ?", Time.now)

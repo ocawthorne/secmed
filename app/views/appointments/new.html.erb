@@ -1,5 +1,5 @@
-<%= form_tag('appointments#new', method: :post) do %>
-
+<%= form_tag(new_doctor_appointment_path) do %>
+  
   <div class="form-group">
     <%= label_tag(:name, "Name of patient:") %>
    <input list="patients" name="patients" id="patient">
@@ -9,11 +9,39 @@
       <% end %>
    </datalist>
   </div>
-  <p>(Patient not showing up on the list? Please create a new patient.)</p>
+
+  (Patient not showing up on the list? Please ask that they sign up first.)
+  <br><br>
+
 
   <div class="form-group">
     <%= label_tag(:date, "Date of appointment:") %>
     <%= date_field_tag(:date, nil, class: "form-control") %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag(:complaint, "Presenting complaint:") %>
+    <%= text_field_tag(:complaint, nil, class: "form-control") %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag(:diagnosis, "Diagnosis:") %>
+    <%= text_field_tag(:diagnosis, nil, class: "form-control") %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag(:name, "Prescription:") %>
+   <input list="drugs" name="drugs" id="drug">
+   <datalist id="drugs">
+      <% @drugs.each do |drug| %>
+         <option value="<%= drug.name %>">
+      <% end %>
+   </datalist>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag(:prescription_expiry, "Date for prescription to be taken until:") %>
+    <%= date_field_tag(:prescription_expiry, nil, class: "form-control") %>
   </div>
    
   <div class="actions">

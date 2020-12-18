@@ -11,7 +11,7 @@
    <tr>
       <td><%= appointment.date.strftime('%d/%m/%Y') %></td>
       <td><%= full_name(@user_id_type == "doctor_id" ? appointment.patient : appointment.doctor) %></td>
-      <td><%= link_to "(view)", appointment_path(appointment) %>
+      <td><%= link_to "(view)", patient_appointment_path(appointment.patient, appointment.doctor) %>
    </tr>
    <% end %>
 </table>

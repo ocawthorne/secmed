@@ -1,0 +1,15 @@
+All patients in practice:
+<br><br>
+<table>
+   <tr>
+      <th>Name</th>
+      <th>DOB</th>
+      <th>Registration date</th>
+   </tr>
+   <% @patients.each do |patient| %>
+   <tr>
+      <td><%= "#{patient.surname.upcase}, #{patient.first_name} #{patient.middle_name}".squish %></td>
+      <td><%= patient.date_of_birth.strftime('%d/%m/%Y') unless patient.date_of_birth == nil %></td>
+      <td><%= patient.created_at.strftime('%d/%m/%Y') %></td>
+   </tr>
+   <% end %>

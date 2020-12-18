@@ -1,7 +1,9 @@
 class SessionsController < ApplicationController
 
   def new
-    redirect_to controller: 'appointments', action: 'index' if logged_in?
+    if logged_in?
+      redirect_to(user_id_type == "doctor_id" ? doctor_appointments_path(current_user) : patient_appointments_path(current_user))
+    end
   end
 
   def create
@@ -22,10 +24,10 @@ class SessionsController < ApplicationController
       elsif patient
         session[:patient_id] = patient.id
       else
-        redirect_to controller: 'sessions', action: 'new'
+        redirect_to login_path
       end
     end
-    redirect_to controller: 'appointments', action: 'index'
+    new
   end 
   
   def destroy

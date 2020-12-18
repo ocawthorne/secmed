@@ -1,6 +1,6 @@
 module ApplicationHelper
    def full_name(instance)
-      "#{instance.first_name} #{instance.middle_name.to_s if instance.has_attribute?(:middle_name)} #{instance.surname}"
+      "#{instance.first_name} #{instance.middle_name if instance.has_attribute?(:middle_name)} #{instance.surname}".squish
    end
 
    def logged_in?

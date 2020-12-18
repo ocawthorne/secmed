@@ -27,12 +27,13 @@
       <h1>SecMed</h1>
       <br>
       <% if logged_in? %>
-        <%= link_to "Appointments", appointments_path %>   
         <% if session.to_h.has_key?("patient_id") %>
-          <%= link_to "Medical record", "/patients/#{session[:patient_id]}" %>   
+          <%= link_to "Appointments", patient_appointments_path %>   
+          <%= link_to "Medical record", patient_path(session[:patient_id]) %>   
         <% elsif session.to_h.has_key?("doctor_id") %>
-          <%= link_to "New patient", new_patient_path %>   
-          <%= link_to "New appointment", new_appointment_path %>   
+          <%= link_to "Appointments", doctor_appointments_path(session[:doctor_id]) %>   
+          <%= link_to "View all patients", patients_path %>   
+          <%= link_to "New appointment", new_doctor_appointment_path(session[:doctor_id]) %>   
         <% end %>
         <%= link_to "Log out", logout_path %>
       <% else %>
