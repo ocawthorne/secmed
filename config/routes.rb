@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get  '/login' => 'sessions#new'
   get '/auth/facebook/callback' => 'sessions#create' 
   post '/login' => 'sessions#create'
-  post '/logout' => 'sessions#destroy'
+  get '/logout' => 'sessions#destroy'
 
   get '/home' => 'doctors#show'
 
@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   resources :doctors, only: :show do
     resources :appointments, only: :index
   end
+
+  # resources :sessions
 
   # resources :patients, only: [:new, :create, :show, :edit, :update] do
   #   resources :appointments, only: [:new, :create, :edit, :update]

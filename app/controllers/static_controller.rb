@@ -1,3 +1,5 @@
 class StaticController < ApplicationController
-  def home; end
+  def home
+    redirect_to controller: 'appointments', action: 'index' if logged_in?
+  end
 end

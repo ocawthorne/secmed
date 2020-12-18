@@ -5,9 +5,40 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
+  <style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  </style>
   <body>
     <div class="container">
       <h1>SecMed</h1>
+      <br>
+      <% if logged_in? %>
+        <%= link_to "Appointments", appointments_path %>   
+        <% if session.to_h.has_key?("patient_id") %>
+          <%= link_to "Medical record", "/patients/#{session[:patient_id]}" %>   
+        <% elsif session.to_h.has_key?("doctor_id") %>
+          <%= link_to "New patient", new_patient_path %>   
+          <%= link_to "New appointment", new_appointment_path %>   
+        <% end %>
+        <%= link_to "Log out", logout_path %>
+      <% else %>
+        <%= link_to "Log in as a patient with Facebook", '/auth/facebook' %>   
+        <%= link_to "Log in as practitioner", login_path %>
+      <% end %>
       <br><br>
       <%= yield %>
 

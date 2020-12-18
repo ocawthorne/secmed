@@ -1,11 +1,17 @@
 <h3>Hello, <%= full_name(@user) %>.</h3>
 <br>
 <p>Appointment History:</p>
-<ul>
-<% @user.appointments.each do |appointment| %>
-   <li>
-   <%= appointment.date.strftime('%d/%m/%Y') %> | 
-   <%= full_name(appointment.patient) if @user_id_type == "doctor_id"  %>
-   <%= full_name(appointment.doctor) if @user_id_type == "patient_id" %></li>
-<% end %>
-</ul>
+<table>
+   <tr>
+      <th>Date</th>
+      <th><%= @user_id_type == "doctor_id" ? "Patient" : "Doctor" %></th>
+      <th>Link</th>
+   </tr>
+   <% @user.appointments.sort_by{ |appointment| appointment.date }.reverse!.each do |appointment| %>
+   <tr>
+      <td><%= appointment.date.strftime('%d/%m/%Y') %></td>
+      <td><%= full_name(@user_id_type == "doctor_id" ? appointment.patient : appointment.doctor) %></td>
+      <td><%= link_to "(view)", appointment_path(appointment) %>
+   </tr>
+   <% end %>
+</table>
