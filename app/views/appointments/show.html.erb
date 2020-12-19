@@ -1,9 +1,19 @@
 <h3>View appointment (<%= @appointment.date.strftime('%d/%m/%Y') %>)</h3>
 <p>Patient: <%= full_name(@appointment.patient) %></p>
 <p>Consultant: Dr <%= full_name(@appointment.doctor) %></p>
-<br>
+<%# if user_id_type == "doctor_id" %>
+   <%# link_to "(delete this record)", controller: 'appointments', action: 'destroy' %>
+<%# end %>
+<br><br>
 
-<p><b>Presenting complaint:</b></p>
-<%= @appointment.complaint %>
+<p><b>Presenting complaint:</b> <%= @appointment.complaint %></p>
 <p><b>Diagnosis:</b> <%= @appointment.diagnosis %></p>
 <p><b>Drug prescribed:</b> <%= @appointment.drug_prescribed %></p>
+
+<% if @drug_interactions.count > 0 %>
+   <h3>Interactions</h3>
+   <% @drug_interactions.each do |d| %>
+      <p><b><%= d[0].drug_1 %> and <%= d[0].drug_2 %></b></p>
+      <p><%= d[0].info %></p>
+   <% end %>
+<% end %>

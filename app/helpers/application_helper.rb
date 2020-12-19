@@ -4,6 +4,16 @@ module ApplicationHelper
    end
 
    def logged_in?
-      session.to_h.has_key?('patient_id') || session.to_h.has_key?('doctor_id')
+      !!user_id_type
+   end
+
+   def user_id_type
+      if session.to_h.has_key?('patient_id')
+         "patient_id"
+      elsif session.to_h.has_key?('doctor_id')
+         "doctor_id"
+      else
+         nil
+      end
    end
 end
