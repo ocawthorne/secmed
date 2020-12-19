@@ -42,3 +42,5 @@ yarn-debug.log*
 /makefile
 /FUNCTION.md
 .env
+/z-scrapes/scrape.rb
+/z-scrapes/nokogiri_drug_scrape.rb

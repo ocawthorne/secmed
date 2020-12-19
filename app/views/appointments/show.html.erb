@@ -1,0 +1,9 @@
+<h3>View appointment (<%= @appointment.date.strftime('%d/%m/%Y') %>)</h3>
+<p>Patient: <%= full_name(@appointment.patient) %></p>
+<p>Consultant: Dr <%= full_name(@appointment.doctor) %></p>
+<br>
+
+<p><b>Presenting complaint:</b></p>
+<%= @appointment.complaint %>
+<p><b>Diagnosis:</b> <%= @appointment.diagnosis %></p>
+<p><b>Drug prescribed:</b> <%= @appointment.drug_prescribed %></p>

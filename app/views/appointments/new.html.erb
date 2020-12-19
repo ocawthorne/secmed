@@ -1,18 +1,20 @@
-<%= form_tag(new_doctor_appointment_path) do %>
+<h3>New appointment</h3>
+<br>
+
+<%= form_tag(doctor_appointments_path) do %>
   
   <div class="form-group">
     <%= label_tag(:name, "Name of patient:") %>
    <input list="patients" name="patients" id="patient">
    <datalist id="patients">
       <% @patients.each do |patient| %>
-         <option value="<%= full_name patient %>">
+         <option value="<%= full_name patient %> - <%= patient.id %>">
       <% end %>
    </datalist>
   </div>
 
   (Patient not showing up on the list? Please ask that they sign up first.)
   <br><br>
-
 
   <div class="form-group">
     <%= label_tag(:date, "Date of appointment:") %>
@@ -30,7 +32,7 @@
   </div>
 
   <div class="form-group">
-    <%= label_tag(:name, "Prescription:") %>
+    <%= label_tag(:drug_name, "Prescription:") %>
    <input list="drugs" name="drugs" id="drug">
    <datalist id="drugs">
       <% @drugs.each do |drug| %>
