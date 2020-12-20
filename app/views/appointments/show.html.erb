@@ -10,7 +10,7 @@
 <p><b>Diagnosis:</b> <%= @appointment.diagnosis %></p>
 <p><b>Drug prescribed:</b> <%= @appointment.drug_prescribed %></p>
 
-<% if @drug_interactions.count > 0 %>
+<% if @drug_interactions.any? %>
    <h3>Interactions</h3>
    <% @drug_interactions.each do |d| %>
       <p><b><%= d[0].drug_1 %> and <%= d[0].drug_2 %></b></p>

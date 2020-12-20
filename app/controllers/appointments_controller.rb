@@ -35,8 +35,9 @@ class AppointmentsController < ApplicationController
 
    def show
       @appointment = Appointment.find(params[:id])
-      active_drugs = @appointment.patient.drugs.active.map{ |d| Drug.find(d.drug_id) }.sort_by{ |d| d.name }
-      @drug_interactions = find_drug_interactions(active_drugs) if active_drugs.count > 1
+      patient = @appointment.patient
+      active_drugs = patient.drugs.active.select{ |drug| drug.patient_id == patient.id }
+      @drug_interactions = active_drugs.count > 1 ? find_drug_interactions(active_drugs) : []
    end
 
    def destroy

@@ -26,7 +26,8 @@ class ApplicationController < ActionController::Base
          next if i == max - 1
          n = 1
          until i + n == max
-            int = DrugInteraction.where("drug_1 = ? and drug_2 = ?", Drug.find(drug[:drug_id]).name, Drug.find(active_drugs[i+n][:drug_id]).name)
+            binding.pry
+            int = DrugInteraction.where("drug_1 = ? and drug_2 = ?", Drug.find(drug.drug_id).name, Drug.find(active_drugs[i+n].drug_id).name)
             drug_interactions << int unless int.empty?
             n += 1
          end
