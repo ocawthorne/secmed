@@ -1,17 +1,21 @@
-<h3>Hello, <%= full_name(@user) %>.</h3>
+<h3>Appointment History</h3>
 <br>
-<p>Appointment History:</p>
-<table>
-   <tr>
-      <th>Date</th>
-      <th><%= @user_id_type == "doctor_id" ? "Patient" : "Doctor" %></th>
-      <th>Link</th>
-   </tr>
-   <% @user.appointments.sort_by{ |appointment| appointment.date }.reverse!.each do |appointment| %>
-   <tr>
-      <td><%= appointment.date.strftime('%d/%m/%Y') %></td>
-      <td><%= full_name(@user_id_type == "doctor_id" ? appointment.patient : appointment.doctor) %></td>
-      <td><%= link_to "(view)", patient_appointment_path(patient_id: appointment.patient, id: appointment) %>
-   </tr>
-   <% end %>
-</table>
+<p><b><%= full_name(@user) %></b></p>
+<% if @user.appointments.count > 0 %>
+   <table>
+      <tr>
+         <th>Date</th>
+         <th><%= @user_id_type == "doctor_id" ? "Patient" : "Doctor" %></th>
+         <th>Link</th>
+      </tr>
+      <% @user.appointments.sort_by{ |appointment| appointment.date }.reverse!.each do |appointment| %>
+      <tr>
+         <td><%= appointment.date.strftime('%d/%m/%Y') %></td>
+         <td><%= full_name(@user_id_type == "doctor_id" ? appointment.patient : appointment.doctor) %></td>
+         <td><%= link_to "(view)", patient_appointment_path(patient_id: appointment.patient, id: appointment) %>
+      </tr>
+      <% end %>
+   </table>
+<% else %>
+   <p>No appointments yet.</p>
+<% end %>

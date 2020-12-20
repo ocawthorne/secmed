@@ -1,0 +1,38 @@
+<h3>Medical record: <%= full_name(@patient) %></h3>
+<p><b>Date of Birth:</b> <%= @patient.date_of_birth.strftime('%d/%m/%Y') if @patient.date_of_birth %></p>
+<br>
+<% if @conditions.any? %>
+   <p><b>Existing conditions:</b></p>
+   <ul>
+   <% @conditions.sort.each do |c| %>
+      <li><%= c.capitalize %></li>
+   <% end %>
+   </ul>
+<% end %>
+
+<% if @patient.drugs.any? %>
+   <br>
+   <p><b>Drugs currently prescribed:</b></p>
+   <ul>
+   <% @patient.drugs.each do |d| %>
+      <li><%= d.name %></li>
+   <% end %>
+   </ul>
+<% end %>
+
+<% if @drug_interactions.any? %>
+   <br>
+   <h3>Interactions</h3>
+   <% @drug_interactions.each do |d| %>
+      <p><b><%= d[0].drug_1 %> and <%= d[0].drug_2 %></b></p>
+      <p><%= d[0].info %></p>
+   <% end %>
+<% end %>
+
+<% if @drug_contraindications.any? %>
+   <br>
+   <h3>Contra-Indications</h3>
+   <% @drug_contraindications.each do |contra| %>
+      <p><%= contra %></p>
+   <% end %>
+<% end %>

@@ -28,8 +28,8 @@
       <br>
       <% if logged_in? %>
         <% if session.to_h.has_key?("patient_id") %>
-          <%= link_to "Appointments", patient_appointments_path %>   
-          <%= link_to "Medical record", patient_path(session[:patient_id]) %>   
+          <%= link_to "My appointments", patient_appointments_path(session[:patient_id]) %>   
+          <%= link_to "My medical record", patient_path(session[:patient_id]) %>   
         <% elsif session.to_h.has_key?("doctor_id") %>
           <%= link_to "Appointments", doctor_appointments_path(session[:doctor_id]) %>   
           <%= link_to "View all patients", patients_path %>   

@@ -19,6 +19,36 @@ class ApplicationController < ActionController::Base
       !!user_id_type
    end
 
+   def find_drug_interactions(active_drugs)
+      drug_interactions = []
+      max = active_drugs.count
+      active_drugs.each_with_index do |drug, i|
+         next if i == max - 1
+         n = 1
+         until i + n == max
+            int = DrugInteraction.where("drug_1 = ? and drug_2 = ?", Drug.find(drug[:drug_id]).name, Drug.find(active_drugs[i+n][:drug_id]).name)
+            drug_interactions << int unless int.empty?
+            n += 1
+         end
+      end
+      drug_interactions
+   end
+
+   def find_drug_contraindications(active_drugs, conditions)
+      arr = []
+      conditions.each do |condition|
+         active_drugs.each do |drug|
+            rel_drug = Drug.find(drug[:drug_id])
+            contra = rel_drug.contraindications
+            next unless contra
+            if contra.downcase.include?(condition.name)
+               arr << "#{rel_drug.name.upcase} and #{condition.name.upcase}: " + contra.delete_prefix("\n            Contra-indications")
+            end
+         end
+      end
+      arr
+   end
+
    private
 
    def require_login
