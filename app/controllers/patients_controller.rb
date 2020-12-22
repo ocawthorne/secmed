@@ -1,22 +1,12 @@
 class PatientsController < ApplicationController
-   before_action :require_login
-   before_action :must_be_doctor
-   skip_before_action :must_be_doctor, only: :show
-
-   def new
-      @patient = Patient.new
-   end
-
-   def create
-      @patient = Patient.create(params)
-   end
+   before_action :must_be_doctor_or_current_patient
 
    def show
       if user_id_type == "patient_id"
          return head(:forbidden) unless session[:patient_id] == params[:id].to_i
       end
       @patient = Patient.find(params[:id])
-      @conditions = @patient.conditions.map { |c| c.name }
+      @conditions = @patient.conditions
       active_drugs = @patient.drugs.active.select{ |drug| drug.patient_id == @patient.id }.sort
       @drug_interactions = find_drug_interactions(active_drugs)
       @drug_contraindications = find_drug_contraindications(active_drugs, @patient.conditions)

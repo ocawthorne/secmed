@@ -16,16 +16,8 @@ class SessionsController < ApplicationController
       end
       session[:patient_id] = user.id
     else
-      doctor, patient = Doctor.find_by(email: params[:email]), Patient.find_by(email: params[:email])
-      doctor.try(:authenticate, params[:password]) if doctor
-      patient.try(:authenticate, params[:password]) if patient
-      if doctor
-        session[:doctor_id] = doctor.id
-      elsif patient
-        session[:patient_id] = patient.id
-      else
-        redirect_to login_path
-      end
+      @doctor = Doctor.find_by(email: params[:email])
+      @doctor.try(:authenticate, params[:password]) ? (session[:doctor_id] = @doctor.id) : (binding.pry ; qredirect_to login_path)
     end
     new
   end 

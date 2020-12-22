@@ -4,8 +4,11 @@
 <% if @conditions.any? %>
    <p><b>Existing conditions:</b></p>
    <ul>
-   <% @conditions.sort.each do |c| %>
-      <li><%= c.capitalize %></li>
+   <% @conditions.sort_by{ |c| c.name }.each do |c| %>
+      <li>
+      <%= c.name.capitalize %>
+      <%= link_to "(remove)", "/conditions/#{c.id}" if session[:doctor_id] %>
+      </li>
    <% end %>
    </ul>
 <% end %>
@@ -15,7 +18,10 @@
    <p><b>Drugs currently prescribed:</b></p>
    <ul>
    <% @patient.drugs.each do |d| %>
-      <li><%= d.name %></li>
+      <li>
+      <%= d.name %>
+      <%= link_to "(remove)", "/drugs/#{d.id}" if session[:doctor_id] %>
+      </li>
    <% end %>
    </ul>
 <% end %>

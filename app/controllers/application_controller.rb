@@ -20,13 +20,13 @@ class ApplicationController < ActionController::Base
    end
 
    def find_drug_interactions(active_drugs)
+      active_drugs = active_drugs.sort_by{ |d| d.drug_id }
       drug_interactions = []
       max = active_drugs.count
       active_drugs.each_with_index do |drug, i|
          next if i == max - 1
          n = 1
          until i + n == max
-            binding.pry
             int = DrugInteraction.where("drug_1 = ? and drug_2 = ?", Drug.find(drug.drug_id).name, Drug.find(active_drugs[i+n].drug_id).name)
             drug_interactions << int unless int.empty?
             n += 1
@@ -56,8 +56,13 @@ class ApplicationController < ActionController::Base
       redirect_to(controller: 'sessions', action: 'new') unless logged_in?
    end
 
-   def must_be_doctor
-      return head(:forbidden) unless (session[:patient_id] == params[:id].to_i if session.to_h.has_key?(:patient_id)) || (user_id_type == "doctor_id")
+   def must_be_doctor_or_current_patient
+      case user_id_type
+      when "patient_id" 
+         return head(:forbidden) unless session[:patient_id] == params[:id].to_i
+      when nil
+         return head(:forbidden)
+      end
    end
 
 end

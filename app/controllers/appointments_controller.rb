@@ -1,9 +1,7 @@
 require_relative '../../config/environment'
 
 class AppointmentsController < ApplicationController
-   before_action :require_login
-   before_action :must_be_doctor
-   skip_before_action :must_be_doctor, only: [:index, :show]
+   before_action :must_be_doctor_or_current_patient
 
    def new
       @patients = Patient.all
@@ -37,6 +35,7 @@ class AppointmentsController < ApplicationController
       @appointment = Appointment.find(params[:id])
       patient = @appointment.patient
       active_drugs = patient.drugs.active.select{ |drug| drug.patient_id == patient.id }
+      @drug_contraindications = find_drug_contraindications(active_drugs, patient.conditions)
       @drug_interactions = active_drugs.count > 1 ? find_drug_interactions(active_drugs) : []
    end
 

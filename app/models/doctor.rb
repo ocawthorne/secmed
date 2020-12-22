@@ -5,7 +5,7 @@ class Doctor < ActiveRecord::Base
    validates :first_name, presence: true
    validates :surname, presence: true
    validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
-   validates :password, presence: true
+   validates :password, presence: true, confirmation: true
    
    has_secure_password
 end
