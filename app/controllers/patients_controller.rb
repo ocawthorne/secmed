@@ -1,6 +1,14 @@
 class PatientsController < ApplicationController
    before_action :must_be_doctor_or_current_patient
 
+   def new
+
+   end
+
+   def create
+
+   end
+
    def show
       if user_id_type == "patient_id"
          return head(:forbidden) unless session[:patient_id] == params[:id].to_i

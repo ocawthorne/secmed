@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
 
   def create
     if auth
-      user = Patient.find_or_create_by(uid: auth['uid']) do |u|
+      user = Patient.find_or_create_y(uid: auth['uid']) do |u|
         u.first_name = auth['info']['name'].split(" ").first
         u.surname = auth['info']['name'].split(" ").last
         u.email = auth['info']['email']
@@ -16,8 +16,17 @@ class SessionsController < ApplicationController
       end
       session[:patient_id] = user.id
     else
-      @doctor = Doctor.find_by(email: params[:email])
-      @doctor.try(:authenticate, params[:password]) ? (session[:doctor_id] = @doctor.id) : (binding.pry ; qredirect_to login_path)
+      @user = Doctor.find_by(email: params[:email])
+      id_type = "doctor"
+      unless @user 
+        @user = Patient.find_by(email: params[:email])
+        id_type = "patient"
+      end
+      if @user.try(:authenticate, params[:password])
+        session[:"#{id_type}_id"] = @user.id
+      else
+        redirect_to login_path
+      end
     end
     new
   end 
