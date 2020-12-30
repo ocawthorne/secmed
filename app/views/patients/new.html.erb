@@ -1,0 +1,45 @@
+<h3>Sign up as a new patient</h3>
+<p>* compulsory fields</p>
+<%= form_for @patient do |f| %>
+   
+  <div class="form-group">
+    <%= label_tag(:first_name) %>*
+    <%= text_field_tag(:first_name, nil, class: "form-control") %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag(:middle_name, "Middle name (if applicable)") %>
+    <%= text_field_tag(:middle_name, nil, class: "form-control") %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag(:surname) %>*
+    <%= text_field_tag(:surname, nil, class: "form-control") %>
+  </div>
+
+   <div class="form-group">
+    <%= label_tag(:date_of_birth) %>*
+    <%= date_field_tag(:date_of_birth, nil, class: "form-control") %>
+  </div>
+
+   <div class="form-group">
+    <%= label_tag(:email) %>*
+    <%= text_field_tag(:email, nil, class: "form-control") %>
+  </div>
+
+   <div class="form-group">
+    <%= label_tag(:password) %>*
+    <%= password_field_tag(:password, nil, class: "form-control") %>
+  </div>
+
+   <div class="form-group">
+    <%= label_tag(:confirm_password) %>*
+    <%= password_field_tag(:confirm_password, nil, class: "form-control") %>
+  </div>
+
+   <div class="actions">
+      <br/>
+      <%= f.submit "Sign up as new patient", class: "btn btn-primary" %>
+   </div>
+
+<% end %>

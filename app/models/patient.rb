@@ -13,5 +13,3 @@ class Patient < ActiveRecord::Base
 
    has_secure_password
 end
-
-# where("prescription_expiry < ?", Time.now)

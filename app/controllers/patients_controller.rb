@@ -1,11 +1,20 @@
 class PatientsController < ApplicationController
-   before_action :must_be_doctor_or_current_patient
+   before_action :must_be_doctor_or_current_patient, except: [:new, :create]
 
    def new
-
+      @patient = Patient.new
    end
 
    def create
+      @patient = Patient.create(
+         first_name: params[:first_name],
+         middle_name: params[:middle_name],
+         surname: params[:surname],
+         date_of_birth: params[:date_of_birth],
+         email: params[:email],
+         password: params[:password]
+      )
+      binding.pry
 
    end
 
