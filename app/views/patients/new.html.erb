@@ -1,5 +1,19 @@
-<h3>Sign up as a new patient</h3>
-<p>* compulsory fields</p>
+<h4>Sign up as a new patient</h4>
+<p>Please note that you may only sign up as a patient. If you are a consultant, please contact your system administrator for a practitioner's account.</p>
+
+
+<% if @patient.errors.any? %>
+   <p class="error"><b><%= "There were some errors with your signup:" %></b></p>
+   <ul>
+   <% @patient.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+   <% end %>
+   </ul>
+<% end %>
+* compulsory fields
+<br>
+<br>
+
 <%= form_for @patient do |f| %>
    
   <div class="form-group">

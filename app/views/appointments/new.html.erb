@@ -1,10 +1,19 @@
-<h3>New appointment</h3>
+<h4>New appointment</h4>
+<br>
+<% if @appointment.errors.any? %>
+   <p class="error"><b><%= "There were some errors with this new appointment:" %></b></p>
+   <ul>
+   <% @appointment.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+   <% end %>
+   </ul>
+<% end %>
 <br>
 
 <%= form_tag(doctor_appointments_path) do %>
   
   <div class="form-group">
-    <%= label_tag(:name, "Name of patient:") %>
+    <%= label_tag(:name, "Name of patient") %><br>
    <input list="patients" name="patients" id="patient">
    <datalist id="patients">
       <% @patients.each do |patient| %>
@@ -13,26 +22,23 @@
    </datalist>
   </div>
 
-  (Patient not showing up on the list? Please ask that they sign up first.)
-  <br><br>
-
   <div class="form-group">
-    <%= label_tag(:date, "Date of appointment:") %>
+    <%= label_tag(:date, "Date of appointment") %>
     <%= date_field_tag(:date, nil, class: "form-control") %>
   </div>
 
   <div class="form-group">
-    <%= label_tag(:complaint, "Presenting complaint:") %>
+    <%= label_tag(:complaint, "Presenting complaint") %>
     <%= text_field_tag(:complaint, nil, class: "form-control") %>
   </div>
 
   <div class="form-group">
-    <%= label_tag(:diagnosis, "Diagnosis:") %>
+    <%= label_tag(:diagnosis) %>
     <%= text_field_tag(:diagnosis, nil, class: "form-control") %>
   </div>
 
   <div class="form-group">
-    <%= label_tag(:drug_name, "Prescription:") %>
+    <%= label_tag(:drug_name, "Prescription") %><br>
    <input list="drugs" name="drugs" id="drug">
    <datalist id="drugs">
       <% @drugs.each do |drug| %>
@@ -42,12 +48,13 @@
   </div>
 
   <div class="form-group">
-    <%= label_tag(:prescription_expiry, "Date for prescription to be taken until:") %>
+    <%= label_tag(:prescription_expiry, "Date for prescription to be taken until") %>
     <%= date_field_tag(:prescription_expiry, nil, class: "form-control") %>
   </div>
    
+  <br>
   <div class="actions">
-    <%= submit_tag("Submit new appointment") %>
+    <%= submit_tag("Submit appointment") %>
   </div>
 
 <% end %>

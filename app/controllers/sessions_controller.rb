@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
         u.first_name = auth['info']['name'].split(" ").first
         u.surname = auth['info']['name'].split(" ").last
         u.email = auth['info']['email']
+        u.date_of_birth = Time.now
         u.password = SecureRandom.hex
       end
       session[:patient_id] = user.id

@@ -14,8 +14,7 @@ class PatientsController < ApplicationController
          email: params[:email],
          password: params[:password]
       )
-      binding.pry
-
+      @patient.errors ? render('new') : (redirect_to patient_path(@patient))
    end
 
    def show
