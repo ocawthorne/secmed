@@ -1,5 +1,3 @@
-require_relative '../../config/environment'
-
 class AppointmentsController < ApplicationController
    before_action :must_be_doctor_or_current_patient
 

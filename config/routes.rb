@@ -19,29 +19,4 @@ Rails.application.routes.draw do
     resources :appointments, only: [:index, :show, :edit, :update, :destroy]
   end
 
-  # resources :patients, only: [:new, :create, :edit, :update] do
-  #   resources :appointments, only: [:show, :index]
-  # end
-
-  # resources :appointments, only: [:new, :create] do
-  #   resources :doctors, only: :index
-  #   resources :patients, only: [:index, :edit, :update, :show]
-  # end
-  
-  # resources :patients, only: [:new, :create, :edit, :update, :show]
-
-  # resources :doctors, only: :show do
-  #   resources :appointments, only: :index
-  # end
-
-  # resources :sessions
-
-  # resources :patients, only: [:new, :create, :show, :edit, :update] do
-  #   resources :appointments, only: [:new, :create, :edit, :update]
-  # end
-
-  # resources :patients, only: [:new, :edit] do
-  #   resources :appointments, only: [:show, :new, :create, :edit, :update]
-  # end
-
 end

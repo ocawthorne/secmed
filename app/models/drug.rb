@@ -7,5 +7,3 @@ class Drug < ActiveRecord::Base
    }
 
 end
-
-# where("prescription_expiry < ?", Time.now)
