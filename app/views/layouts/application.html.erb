@@ -31,6 +31,7 @@
       <h1>SecMed</h1>
       <h4>Flatiron Clinic</h4>
       <br>
+      <%= link_to "Home", root_path %>   
       <% if logged_in? %>
         <% if session.to_h.has_key?("patient_id") %>
           <%= link_to "My appointments", patient_appointments_path(session[:patient_id]) %>   

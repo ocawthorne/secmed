@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
    def must_be_doctor_or_current_patient
       case user_id_type
       when "patient_id" 
-         return head(:forbidden) unless session[:patient_id] == params[:id].to_i
+         return head(:forbidden) unless session[:patient_id] == params[:patient_id].to_i || params[:id].to_i
       when nil
          return head(:forbidden)
       end

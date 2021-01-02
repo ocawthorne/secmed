@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
 
   def create
     if auth
-      user = Patient.find_or_create_y(uid: auth['uid']) do |u|
+      user = Patient.find_or_create_by(uid: auth['uid']) do |u|
         u.first_name = auth['info']['name'].split(" ").first
         u.surname = auth['info']['name'].split(" ").last
         u.email = auth['info']['email']

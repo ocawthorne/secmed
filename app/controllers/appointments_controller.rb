@@ -4,8 +4,8 @@ class AppointmentsController < ApplicationController
    before_action :must_be_doctor_or_current_patient
 
    def new
-      @patients = Patient.all
-      @drugs = Drug.all
+      @appointment = Appointment.new
+      @patients, @drugs = Patient.all, Drug.all
    end
 
    def create
@@ -21,9 +21,8 @@ class AppointmentsController < ApplicationController
          complaint: params[:complaint],
          diagnosis: params[:diagnosis]
       )
-
       if @appointment.errors.any?
-         new
+         @patients, @drugs = Patient.all, Drug.all
          render 'new'
       else
          if !params[:drugs].empty?
@@ -49,7 +48,7 @@ class AppointmentsController < ApplicationController
    end
 
    def destroy
-      Appointment.find(params[:id]).destroy
+      a = Appointment.find(params[:id])
    end
 
 end
