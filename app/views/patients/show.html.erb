@@ -4,6 +4,7 @@
 <% end %>
 <br>
 <% if @patient.appointments.any? %>
+   <p><b>Appointment Schedule</b></p>
    <table>
       <tr>
          <th>Appointment date</th>
@@ -23,15 +24,16 @@
             <% end %>
             </td>
             <% if @patient.drugs.find_by(name: appointment.drug_prescribed) %>
+               <% patientdrug = PatientDrug.find_by(patient_id: @patient.id, drug_id: Drug.find_by(name: appointment.drug_prescribed)) %>
                <td>
                   <%= appointment.drug_prescribed %>
                   <%= link_to "(remove)", "/drugs/#{@patient.drugs.find_by(name: appointment.drug_prescribed).id}" if session[:doctor_id] %>
                </td>
                <td>
-                  <%= PatientDrug.find_by(patient_id: @patient.id, drug_id: Drug.find_by(name: appointment.drug_prescribed)).prescription_expiry.strftime('%d/%m/%Y') %>
+                  <%= patientdrug.prescription_expiry.strftime('%d/%m/%Y') %>
                </td>
                <td>
-                  <%= if PatientDrug.find_by(patient_id: @patient.id, drug_id: Drug.find_by(name: appointment.drug_prescribed)).prescription_expiry > Time.now then "Yes" else "No" end %>
+                  <%= patientdrug.prescription_expiry > Time.now ? "Yes" : "No" %>
                </td>
             <% else %>
                <td></td><td></td><td>No</td>
@@ -41,7 +43,10 @@
       <% end %>
    </table>
 <br>
-<p><b>Note:</b> This is a reflection of the active conditions of the patient. If more information is required from an appointment, please visit the appointment's main view.</p>
+<p><b>Note:</b><br> This is a reflection of the active conditions of the patient, so some conditions/drugs may be missing if a condition is no longer present or if a drug has been deemed unsuitable for the patient. 
+If more information is required from an appointment, please visit the appointment's main view.</p>
+<% else %>
+   <p>No records created yet.</p>
 <% end %>
 <br>
 <% if @drug_interactions.any? %>
