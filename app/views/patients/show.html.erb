@@ -10,6 +10,7 @@
          <th>Diagnosis</th>
          <th>Drug prescribed</th>
          <th>To be taken until</th>
+         <th>Current drug?</th>
          <th>Appointment link</th>
       </tr>
       <% @patient.appointments.sort_by{ |appointment| appointment.date }.reverse!.each do |appointment| %>
@@ -21,17 +22,20 @@
                <%= link_to "(remove)", "/conditions/#{@patient.conditions.find_by(name: appointment.diagnosis.downcase).id}" if session[:doctor_id] %>
             <% end %>
             </td>
-            <td>
             <% if @patient.drugs.find_by(name: appointment.drug_prescribed) %>
-               <%= appointment.drug_prescribed %>
-               <%= link_to "(remove)", "/drugs/#{@patient.drugs.find_by(name: appointment.drug_prescribed).id}" if session[:doctor_id] %>
+               <td>
+                  <%= appointment.drug_prescribed %>
+                  <%= link_to "(remove)", "/drugs/#{@patient.drugs.find_by(name: appointment.drug_prescribed).id}" if session[:doctor_id] %>
+               </td>
+               <td>
+                  <%= PatientDrug.find_by(patient_id: @patient.id, drug_id: Drug.find_by(name: appointment.drug_prescribed)).prescription_expiry.strftime('%d/%m/%Y') %>
+               </td>
+               <td>
+                  <%= if PatientDrug.find_by(patient_id: @patient.id, drug_id: Drug.find_by(name: appointment.drug_prescribed)).prescription_expiry > Time.now then "Yes" else "No" end %>
+               </td>
+            <% else %>
+               <td></td><td></td><td>No</td>
             <% end %>
-            </td>
-            <td>
-            <% if @patient.drugs.find_by(name: appointment.drug_prescribed) %>
-               <%= PatientDrug.find_by(patient_id: @patient.id, drug_id: Drug.find_by(name: appointment.drug_prescribed)).prescription_expiry.strftime('%d/%m/%Y') %>
-            <% end %>
-            </td>
             <td><%= link_to "(view)", patient_appointment_path(patient_id: @patient, id: appointment) %>
          </tr>
       <% end %>

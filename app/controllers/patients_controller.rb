@@ -22,7 +22,6 @@ class PatientsController < ApplicationController
          return head(:forbidden) unless session[:patient_id] == params[:id].to_i
       end
       @patient = Patient.find(params[:id])
-      @conditions = @patient.conditions
       active_drugs = @patient.drugs.active.select{ |drug| drug.patient_id == @patient.id }.sort
       @drug_interactions = find_drug_interactions(active_drugs)
       @drug_contraindications = find_drug_contraindications(active_drugs, @patient.conditions)
