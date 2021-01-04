@@ -41,8 +41,19 @@ class AppointmentsController < ApplicationController
       @appointment = Appointment.find(params[:id])
       patient = @appointment.patient
       active_drugs = patient.drugs.active.select{ |drug| drug.patient_id == patient.id }
-      @drug_contraindications = find_drug_contraindications(active_drugs, patient.conditions)
-      @drug_interactions = active_drugs.count > 1 ? find_drug_interactions(active_drugs) : []
+      @drug_interactions = active_drugs.count > 1 ? find_drug_interactions(active_drugs) : nil
+      if @drug_interactions
+         if @appointment.drug_prescribed == drug_interactions[0][0].drug_1 || @appointment.drug_prescribed == drug_interactions[0][0].drug_2
+            @drug_interactions = drug_interactions.count
+         else
+            @drug_interactions = nil
+         end
+      end
+      drug_contraindications = find_drug_contraindications(active_drugs, patient.conditions)
+      @dc = 0
+      drug_contraindications.each do |c|
+         c.include?(@appointment.drug_prescribed.upcase) ? @dc += 1 : nil
+      end
    end
 
    def destroy

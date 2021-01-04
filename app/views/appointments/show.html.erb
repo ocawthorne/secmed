@@ -1,5 +1,5 @@
 <h3>View appointment (<%= @appointment.date.strftime('%d/%m/%Y') %>)</h3>
-<p>Patient: <%= full_name(@appointment.patient) %> <%= link_to "(view patient record)", patient_path(@appointment.patient) %></p>
+<p>Patient: <%= full_name(@appointment.patient) %> <b><%= link_to "(view patient record)", patient_path(@appointment.patient) %></b></p>
 <p>Consultant: Dr <%= full_name(@appointment.doctor) %></p>
 <br><br>
 
@@ -7,20 +7,17 @@
 <p><b>Diagnosis:</b> <%= @appointment.diagnosis %></p>
 <p><b>Drug prescribed:</b> <%= @appointment.drug_prescribed %></p>
 
-<% if @drug_interactions.any? %>
+<% if @drug_interactions %>
    <br>
    <h3>Interactions</h3>
-   <% @drug_interactions.each do |d| %>
-      <p class="error"><b><%= d[0].drug_1 %> and <%= d[0].drug_2 %></b></p>
-      <p><%= d[0].info %></p>
-   <% end %>
+   <p class="error"><b>Note:</b> <%= @appointment.drug_prescribed %> interacts with <%= @drug_interactions %> other drug(s) prescribed already.</p>
+   <p>Please go to the <%= link_to "patient's medical record", patient_path(@appointment.patient) %> to see this interaction.</p>
 <% end %>
 
 
-<% if @drug_contraindications.any? %>
+<% if @dc > 0 %>
    <br>
    <h3>Contra-Indications</h3>
-   <% @drug_contraindications.each do |contra| %>
-      <p><%= contra %></p>
-   <% end %>
+   <p class="error"><b>Note:</b> A drug entered contra-indicates with <%= @dc %> other condition(s).</p>
+   <p>Please go to the <%= link_to "patient's medical record", patient_path(@appointment.patient) %> to see this contra-indication.</p>
 <% end %>
