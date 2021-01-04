@@ -50,6 +50,12 @@ class ApplicationController < ActionController::Base
       arr
    end
 
+   def destroy_drug_or_condition(i)
+      j = i
+      i.destroy
+      redirect_to patient_path(j.patient)
+   end
+
    private
 
    def require_login

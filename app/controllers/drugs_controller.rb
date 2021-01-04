@@ -1,8 +1,5 @@
 class DrugsController < ApplicationController
    def destroy
-      drug = PatientDrug.find_by(drug_id: params[:id])
-      patient = Patient.find(drug.patient_id)
-      drug.destroy
-      redirect_to patient_path(patient)
+      destroy_drug_or_condition(PatientDrug.find_by(drug_id: params[:id]))
    end
 end

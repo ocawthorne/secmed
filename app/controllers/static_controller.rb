@@ -1,9 +1,12 @@
 class StaticController < ApplicationController
+
   def home
-    if user_id_type == "patient_id"
+    case user_id_type
+    when "patient_id"
       redirect_to patient_appointments_path(current_user)
-    elsif user_id_type == "doctor_id"
+    when "doctor_id"
       redirect_to doctor_appointments_path(current_user)
     end
   end
+  
 end

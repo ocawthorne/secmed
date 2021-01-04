@@ -1,9 +1,6 @@
 <h3>View appointment (<%= @appointment.date.strftime('%d/%m/%Y') %>)</h3>
 <p>Patient: <%= full_name(@appointment.patient) %></p>
 <p>Consultant: Dr <%= full_name(@appointment.doctor) %></p>
-<%# if user_id_type == "doctor_id" %>
-   <%# link_to "(delete this record)", controller: 'appointments', action: 'destroy' %>
-<%# end %>
 <br><br>
 
 <p><b>Presenting complaint:</b> <%= @appointment.complaint %></p>
