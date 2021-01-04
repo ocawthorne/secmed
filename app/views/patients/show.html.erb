@@ -1,31 +1,45 @@
 <h3>Medical record: <%= full_name(@patient) %></h3>
-<p><b>Date of Birth:</b> <%= @patient.date_of_birth.strftime('%d/%m/%Y') if @patient.date_of_birth %></p>
+<% if @patient.date_of_birth %>
+   <p><b>Date of Birth:</b> <%= @patient.date_of_birth.strftime('%d/%m/%Y') if @patient.date_of_birth %></p>
+<% end %>
 <br>
-<% if @conditions.any? %>
-   <p><b>Existing conditions:</b></p>
-   <ul>
-   <% @conditions.sort_by{ |c| c.name }.each do |c| %>
-      <li>
-      <%= c.name.capitalize %>
-      <%= link_to "(remove)", "/conditions/#{c.id}" if session[:doctor_id] %>
-      </li>
-   <% end %>
-   </ul>
+<% if @patient.appointments.any? %>
+   <table>
+      <tr>
+         <th>Appointment date</th>
+         <th>Diagnosis</th>
+         <th>Drug prescribed</th>
+         <th>To be taken until</th>
+         <th>Appointment link</th>
+      </tr>
+      <% @patient.appointments.sort_by{ |appointment| appointment.date }.reverse!.each do |appointment| %>
+         <tr>
+            <td><%= appointment.date.strftime('%d/%m/%Y') %></td>
+            <td>
+            <% if @patient.conditions.find_by(name: appointment.diagnosis.downcase) %>
+               <%= appointment.diagnosis %>
+               <%= link_to "(remove)", "/conditions/#{@patient.conditions.find_by(name: appointment.diagnosis.downcase).id}" if session[:doctor_id] %>
+            <% end %>
+            </td>
+            <td>
+            <% if @patient.drugs.find_by(name: appointment.drug_prescribed) %>
+               <%= appointment.drug_prescribed %>
+               <%= link_to "(remove)", "/drugs/#{@patient.drugs.find_by(name: appointment.drug_prescribed).id}" if session[:doctor_id] %>
+            <% end %>
+            </td>
+            <td>
+            <% if @patient.drugs.find_by(name: appointment.drug_prescribed) %>
+               <%= PatientDrug.find_by(patient_id: @patient.id, drug_id: Drug.find_by(name: appointment.drug_prescribed)).prescription_expiry.strftime('%d/%m/%Y') %>
+            <% end %>
+            </td>
+            <td><%= link_to "(view)", patient_appointment_path(patient_id: @patient, id: appointment) %>
+         </tr>
+      <% end %>
+   </table>
+<br>
+<p><b>Note:</b> This is a reflection of the active conditions of the patient. If more information is required from an appointment, please visit the appointment's main view.</p>
 <% end %>
-
-<% if @patient.drugs.any? %>
-   <br>
-   <p><b>Drugs currently prescribed:</b></p>
-   <ul>
-   <% @patient.drugs.each do |d| %>
-      <li>
-      <%= d.name %>
-      <%= link_to "(remove)", "/drugs/#{d.id}" if session[:doctor_id] %>
-      </li>
-   <% end %>
-   </ul>
-<% end %>
-
+<br>
 <% if @drug_interactions.any? %>
    <br>
    <h3>Interactions</h3>

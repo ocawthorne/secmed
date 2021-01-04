@@ -32,12 +32,4 @@ class PatientsController < ApplicationController
       @patients = Patient.all.sort_by{ |patient| patient.surname }
    end
 
-   def edit
-      @patient = Patient.find(params[:id])
-   end
-
-   def update
-      @patient = Patient.update(params)
-   end
-
 end

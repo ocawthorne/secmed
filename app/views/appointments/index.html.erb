@@ -1,7 +1,7 @@
 <h3>Appointment History</h3>
 <br>
 <p><b><%= full_name(@user) %></b></p>
-<% if @user.appointments.count > 0 %>
+<% if @user.appointments.any? %>
    <table>
       <tr>
          <th>Date</th>
