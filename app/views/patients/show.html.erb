@@ -53,7 +53,7 @@ If more information is required from an appointment, please visit the appointmen
    <br>
    <h3>Interactions</h3>
    <% @drug_interactions.each do |d| %>
-      <p><b><%= d[0].drug_1 %> and <%= d[0].drug_2 %></b></p>
+      <p class="error"><b><%= d[0].drug_1 %> and <%= d[0].drug_2 %></b></p>
       <p><%= d[0].info %></p>
    <% end %>
 <% end %>
