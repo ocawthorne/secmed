@@ -6,14 +6,7 @@ class PatientsController < ApplicationController
    end
 
    def create
-      @patient = Patient.create(
-         first_name: params[:first_name],
-         middle_name: params[:middle_name],
-         surname: params[:surname],
-         date_of_birth: params[:date_of_birth],
-         email: params[:email],
-         password: params[:password]
-      )
+      @patient = Patient.create(user_params)
       if @patient.errors.any?
          render 'new'
       else
@@ -35,5 +28,11 @@ class PatientsController < ApplicationController
    def index
       @patients = Patient.all.sort_by{ |patient| patient.surname }
    end
+   
+   private
 
+   def user_params
+      params.permit(:first_name, :middle_name, :surname, :date_of_birth, :email, :password, :password_confirmation)
+   end
+ 
 end

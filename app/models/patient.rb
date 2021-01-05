@@ -12,6 +12,8 @@ class Patient < ActiveRecord::Base
    validates :surname, presence: true
    validates :date_of_birth, presence: true
    validates :password, presence: true, length: { minimum: 6 }
+   validates_confirmation_of :email, :password
+   validates_confirmation_of :password
 
    has_secure_password
 end
