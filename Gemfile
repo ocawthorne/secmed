@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.1'
 
 #! Use Nokogiri/OpenURI to scrape for drug URLs for interactions
-gem 'nokogiri'
+gem 'nokogiri', ">= 1.11.0.rc4"
 gem 'open-uri'
 gem 'pry-rails'
 gem 'omniauth'
