@@ -19,7 +19,6 @@ class AppointmentsController < ApplicationController
          @patients, @drugs = Patient.all, Drug.all
          render 'new'
       else
-         binding.pry
          if params[:drug_prescribed].present?
             drug = Drug.find_by(name: params[:drug_prescribed])
             patient.drugs << drug
@@ -52,10 +51,6 @@ class AppointmentsController < ApplicationController
       drug_contraindications.each do |c|
          c.include?(@appointment.drug_prescribed.upcase) ? @dc += 1 : nil
       end
-   end
-
-   def destroy
-      a = Appointment.find(params[:id])
    end
 
    private
