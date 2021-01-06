@@ -11,17 +11,9 @@ class AppointmentsController < ApplicationController
          patient = Patient.find(params[:patients].split(" ")[-1].to_i)
       rescue ActiveRecord::RecordNotFound
       end
-      @appointment = Appointment.create(appt_params)
-      @appointment.patient_id = patient.id if patient
-      @appointment.save
-      
-         # date: params[:date],
-         # doctor_id: params[:doctor_id],
-         # patient_id: (patient.id if patient),
-         # drug_prescribed: params[:drugs],
-         # complaint: params[:complaint],
-         # diagnosis: params[:diagnosis]
-      #)
+      appt = Appointment.create(appt_params)
+      appt.patient_id = patient.id if patient
+      @appointment = appt.save
       if @appointment.errors.any?
          @patients, @drugs = Patient.all, Drug.all
          render 'new'
