@@ -13,12 +13,14 @@ class AppointmentsController < ApplicationController
       end
       appt = Appointment.create(appt_params)
       appt.patient_id = patient.id if patient
-      @appointment = appt.save
+      appt.save
+      @appointment = appt
       if @appointment.errors.any?
          @patients, @drugs = Patient.all, Drug.all
          render 'new'
       else
-         if !params[:drug_prescribed].empty?
+         binding.pry
+         if params[:drug_prescribed].present?
             drug = Drug.find_by(name: params[:drug_prescribed])
             patient.drugs << drug
             PatientDrug.find_by(patient_id: patient.id, drug_id: drug.id).update(prescription_expiry: params[:prescription_expiry])
