@@ -7,7 +7,7 @@
 <p><b>Diagnosis:</b> <%= @appointment.diagnosis %></p>
 <p><b>Drug prescribed:</b> <%= @appointment.drug_prescribed %></p>
 
-<% if @drug_interactions %>
+<% if @drug_interactions != 0 %>
    <br>
    <h3>Interactions</h3>
    <p class="error"><b>Note:</b> <%= @appointment.drug_prescribed %> interacts with <%= @drug_interactions %> other drug(s) prescribed already.</p>

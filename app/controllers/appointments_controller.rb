@@ -40,10 +40,11 @@ class AppointmentsController < ApplicationController
       di = active_drugs.count > 1 ? find_drug_interactions(active_drugs) : nil
       di = nil if di == []
       if di
-         if @appointment.drug_prescribed == di[0][0].drug_1 || @appointment.drug_prescribed == di[0][0].drug_2
-            @drug_interactions = di.count
-         else
-            @drug_interactions = nil
+         @drug_interactions = 0
+         di.each do |d|
+            if @appointment.drug_prescribed == d[0].drug_1 || @appointment.drug_prescribed == d[0].drug_2
+               @drug_interactions += 1
+            end
          end
       end
       drug_contraindications = find_drug_contraindications(active_drugs, patient.conditions)
