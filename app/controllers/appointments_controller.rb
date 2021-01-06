@@ -11,20 +11,23 @@ class AppointmentsController < ApplicationController
          patient = Patient.find(params[:patients].split(" ")[-1].to_i)
       rescue ActiveRecord::RecordNotFound
       end
-      @appointment = Appointment.create(
-         date: params[:date],
-         doctor_id: params[:doctor_id],
-         patient_id: (patient.id if patient),
-         drug_prescribed: params[:drugs],
-         complaint: params[:complaint],
-         diagnosis: params[:diagnosis]
-      )
+      @appointment = Appointment.create(appt_params)
+      @appointment.patient_id = patient.id if patient
+      @appointment.save
+      
+         # date: params[:date],
+         # doctor_id: params[:doctor_id],
+         # patient_id: (patient.id if patient),
+         # drug_prescribed: params[:drugs],
+         # complaint: params[:complaint],
+         # diagnosis: params[:diagnosis]
+      #)
       if @appointment.errors.any?
          @patients, @drugs = Patient.all, Drug.all
          render 'new'
       else
-         if !params[:drugs].empty?
-            drug = Drug.find_by(name: params[:drugs])
+         if !params[:drug_prescribed].empty?
+            drug = Drug.find_by(name: params[:drug_prescribed])
             patient.drugs << drug
             PatientDrug.find_by(patient_id: patient.id, drug_id: drug.id).update(prescription_expiry: params[:prescription_expiry])
          end
@@ -41,10 +44,11 @@ class AppointmentsController < ApplicationController
       @appointment = Appointment.find(params[:id])
       patient = @appointment.patient
       active_drugs = patient.drugs.active.select{ |drug| drug.patient_id == patient.id }
-      @drug_interactions = active_drugs.count > 1 ? find_drug_interactions(active_drugs) : nil
-      if @drug_interactions
-         if @appointment.drug_prescribed == @drug_interactions[0][0].drug_1 || @appointment.drug_prescribed == @drug_interactions[0][0].drug_2
-            @drug_interactions = @drug_interactions.count
+      di = active_drugs.count > 1 ? find_drug_interactions(active_drugs) : nil
+      di = nil if di == []
+      if di
+         if @appointment.drug_prescribed == di[0][0].drug_1 || @appointment.drug_prescribed == di[0][0].drug_2
+            @drug_interactions = di.count
          else
             @drug_interactions = nil
          end
@@ -58,6 +62,12 @@ class AppointmentsController < ApplicationController
 
    def destroy
       a = Appointment.find(params[:id])
+   end
+
+   private
+
+   def appt_params
+      params.permit(:date, :doctor_id, :drug_prescribed, :complaint, :diagnosis)
    end
 
 end
